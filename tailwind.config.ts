@@ -19,8 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
-				mono: ['Fira Code', 'monospace'],
+				sans: ['JetBrains Mono', 'Space Mono', 'monospace'],
+				mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+				cyber: ['Space Mono', 'JetBrains Mono', 'monospace'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

@@ -2,10 +2,6 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, BookOpen } from "lucide-react";
 
 const HeroSection = () => {
-  const scrollToCalculator = () => {
-    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const scrollToFramework = () => {
     document.getElementById('framework')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -33,10 +29,10 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Button
               size="lg"
-              onClick={scrollToCalculator}
               className="bg-gradient-primary text-primary-foreground hover:opacity-90 glow-hover px-8 py-3 text-lg font-semibold"
+              asChild
             >
-              Launch Calculator
+              <a href="/calculator">Launch Calculator</a>
             </Button>
             <Button
               size="lg"

@@ -2,9 +2,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield } from "lucide-react";
 
 const CTASection = () => {
-  const scrollToCalculator = () => {
-    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <section className="py-20 relative overflow-hidden">
@@ -31,11 +28,13 @@ const CTASection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"
-              onClick={scrollToCalculator}
               className="bg-gradient-primary text-primary-foreground hover:opacity-90 glow-hover px-8 py-4 text-lg font-semibold"
+              asChild
             >
-              Start Assessment
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <a href="/calculator">
+                Start Assessment
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </a>
             </Button>
             <Button
               size="lg"

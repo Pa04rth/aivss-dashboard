@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,37 +8,37 @@
 
 @layer base {
   :root {
-    /* Dark Cybersecurity Theme */
-    --background: 217 33% 6%; /* #0a0f1e - Very dark navy */
-    --foreground: 210 20% 98%; /* #f8fafc - Off white */
+    /* Dark Cybersecurity Theme - Green/Orange Matrix */
+    --background: 120 100% 2%; /* #000a00 - Very dark green */
+    --foreground: 120 15% 96%; /* #f0f8f0 - Off white green */
 
-    --card: 217 33% 10%; /* #161b29 - Slightly lighter dark */
-    --card-foreground: 210 20% 98%;
+    --card: 120 50% 8%; /* #0d1a0d - Dark green card */
+    --card-foreground: 120 15% 96%;
 
-    --popover: 217 33% 10%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 120 50% 8%;
+    --popover-foreground: 120 15% 96%;
 
-    /* Electric Blue Primary */
-    --primary: 199 100% 50%; /* #00aaff - Electric blue */
-    --primary-foreground: 217 33% 6%;
+    /* Matrix Green Primary */
+    --primary: 120 100% 50%; /* #00ff00 - Matrix green */
+    --primary-foreground: 120 100% 2%;
 
-    /* Subtle Secondary */
-    --secondary: 217 33% 15%; /* Darker card variant */
-    --secondary-foreground: 210 20% 90%;
+    /* Orange Secondary for contrast */
+    --secondary: 25 100% 15%; /* Dark orange variant */
+    --secondary-foreground: 25 15% 90%;
 
-    --muted: 217 33% 12%;
-    --muted-foreground: 215 14% 65%;
+    --muted: 120 30% 12%;
+    --muted-foreground: 120 8% 65%;
 
-    /* Accent Colors */
-    --accent: 199 100% 50%; /* Electric blue accent */
-    --accent-foreground: 217 33% 6%;
+    /* Accent Colors - Orange */
+    --accent: 25 100% 60%; /* #ff6600 - Cyber orange */
+    --accent-foreground: 120 100% 2%;
 
-    /* Chart Colors */
-    --chart-1: 199 100% 50%; /* Electric blue */
-    --chart-2: 270 95% 75%; /* Cool purple */
-    --chart-3: 174 72% 56%; /* Teal */
-    --chart-4: 43 96% 56%; /* Warning yellow */
-    --chart-5: 0 84% 60%; /* Danger red */
+    /* Chart Colors - Cybersecurity palette */
+    --chart-1: 120 100% 50%; /* Matrix green */
+    --chart-2: 25 100% 60%; /* Cyber orange */
+    --chart-3: 180 100% 50%; /* Cyan */
+    --chart-4: 60 100% 50%; /* Yellow warning */
+    --chart-5: 0 100% 50%; /* Red danger */
 
     /* Status Colors */
     --success: 142 71% 45%;
@@ -52,14 +52,14 @@
     --ring: 199 100% 50%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(199 100% 50%), hsl(270 95% 75%));
-    --gradient-card: linear-gradient(145deg, hsl(217 33% 10%), hsl(217 33% 12%));
-    --gradient-glow: radial-gradient(circle at center, hsl(199 100% 50% / 0.3), transparent 70%);
+    --gradient-primary: linear-gradient(135deg, hsl(120 100% 50%), hsl(25 100% 60%));
+    --gradient-card: linear-gradient(145deg, hsl(120 50% 8%), hsl(120 30% 12%));
+    --gradient-glow: radial-gradient(circle at center, hsl(120 100% 50% / 0.3), transparent 70%);
 
     /* Shadows */
-    --shadow-glow: 0 0 20px hsl(199 100% 50% / 0.3);
-    --shadow-card: 0 4px 20px hsl(217 33% 3% / 0.5);
-    --shadow-elevated: 0 8px 32px hsl(217 33% 3% / 0.8);
+    --shadow-glow: 0 0 20px hsl(120 100% 50% / 0.3);
+    --shadow-card: 0 4px 20px hsl(120 100% 3% / 0.5);
+    --shadow-elevated: 0 8px 32px hsl(120 100% 3% / 0.8);
 
     --radius: 0.75rem;
 
@@ -107,8 +107,8 @@
   /* Animated Grid Background */
   .cyber-grid {
     background-image: 
-      linear-gradient(rgba(0, 170, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 170, 255, 0.1) 1px, transparent 1px);
+      linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
     animation: grid-move 20s linear infinite;
   }

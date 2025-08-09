@@ -2,9 +2,6 @@ import { Shield, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
-  const scrollToCalculator = () => {
-    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -28,10 +25,10 @@ const Navbar = () => {
               OWASP AIVSS Paper
             </Button>
             <Button
-              onClick={scrollToCalculator}
               className="bg-gradient-primary text-primary-foreground hover:opacity-90 glow-hover"
+              asChild
             >
-              Launch Calculator
+              <a href="/calculator">Launch Calculator</a>
             </Button>
           </div>
         </div>
