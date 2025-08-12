@@ -37,7 +37,7 @@ const HeroSection = () => {
             <Button
               size="lg"
               onClick={() => scrollToElement("calculator")}
-              className="w-full sm:w-auto text-base font-bold bg-gradient-primary text-primary-foreground rounded-md transition-all duration-300 hover:scale-105 glow-hover px-8 py-6"
+              className="w-full sm:w-auto text-base font-bold bg-accent text-primary-foreground rounded-md transition-all duration-300 hover:scale-105 glow-hover px-8 py-6"
             >
               Launch Calculator
             </Button>

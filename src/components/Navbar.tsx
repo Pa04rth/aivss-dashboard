@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <img src="owasp_logo.png" alt="Home" className="h-10 w-10" />
+            <img src="owasp-logo-light.svg" alt="Home" className="h-10 w-10" />
 
             <span className="text-xl font-bold text-foreground">
               AIVSS Dashboard
@@ -19,7 +19,12 @@ const Navbar = () => {
               variant="ghost"
               size="sm"
               className="text-muted-foreground hover:text-foreground"
-              onClick={() => window.open("https://owasp.org", "_blank")}
+              onClick={() =>
+                window.open(
+                  "https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.5.pdf",
+                  "_blank"
+                )
+              }
             >
               <ExternalLink className="w-4 h-4 mr-2" />
               OWASP AIVSS Paper
