@@ -61,8 +61,8 @@
     /* Gradient Definitions */
     --gradient-primary: linear-gradient(
       135deg,
-      hsl(var(--primary)),
-      hsl(var(--accent))
+      hsl(var(--accent)),
+      hsl(var(--warning))
     );
     --gradient-card: linear-gradient(
       145deg,

@@ -29,8 +29,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-gradient-card border-t border-border mt-0">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-primary font-cyber">AIVSS Framework</h3>

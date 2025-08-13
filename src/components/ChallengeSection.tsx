@@ -1,14 +1,14 @@
 const ChallengeSection = () => {
   return (
-    <section className="py-20 relative">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+    <section className="py-16 sm:py-20 relative">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
               The New Frontier of Risk: 
               <span className="text-primary block mt-2">Securing Agentic AI</span>
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               Agentic AI systems introduce unprecedented capabilities and, with them, novel security vulnerabilities. 
               Traditional scoring systems fall short in capturing the unique risks posed by agent autonomy, tool use, 
               and goal-driven behavior. <span className="text-foreground font-semibold">Understanding and quantifying these risks 

@@ -30,16 +30,16 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="py-20 relative">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+    <section className="py-16 sm:py-20 relative">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground px-4">
             More Than a Calculator. 
             <span className="text-primary block mt-2">An Entire Assessment Toolkit.</span>
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
           {features.map((feature, index) => (
             <Card 
               key={index} 

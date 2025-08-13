@@ -7,26 +7,26 @@ const CommunitySection = () => {
     {
       name: "Slack Community",
       description: "Join discussions about AI security & AIVSS implementation",
-      logoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/2048px-Slack_icon_2019.svg.png",
+      logoUrl: "/slack-logo.png",
       url: "https://owasp.slack.com/aivss",
       color: "hover:text-accent",
       bgColor: "hover:bg-accent/10",
     },
     {
-      name: "LinkedIn Group",
-      description: "Professional network for AI security practitioners",
-      icon: Linkedin,
-      url: "https://linkedin.com/groups/aivss-community",
-      color: "hover:text-primary",
-      bgColor: "hover:bg-primary/10",
+      name: "LinkedIn Network",
+      description: "Connect with cybersecurity professionals using AIVSS",
+      logoUrl: "/linkedin-logo.png",
+      url: "https://linkedin.com/in/aivss-community",
+      color: "hover:text-chart-3",
+      bgColor: "hover:bg-chart-3/10",
     },
     {
-      name: "GitHub Organization",
-      description: "Contribute to framework development & tools",
-      icon: Github,
+      name: "GitHub Repository",
+      description: "Contribute to the open-source AIVSS framework",
+      logoUrl: "/github-logo.png",
       url: "https://github.com/owasp/aivss",
       color: "hover:text-foreground",
-      bgColor: "hover:bg-foreground/10",
+      bgColor: "hover:bg-muted",
     },
   ];
 
@@ -51,15 +51,11 @@ const CommunitySection = () => {
             >
               <CardContent className="p-6 text-center">
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-lg bg-muted mb-4 transition-all duration-300 ${link.bgColor} group-hover:scale-110`}>
-                  {link.logoUrl ? (
-                    <img 
-                      src={link.logoUrl} 
-                      alt={link.name}
-                      className="w-8 h-8 object-contain"
-                    />
-                  ) : (
-                    <link.icon className={`w-8 h-8 text-muted-foreground transition-colors duration-300 ${link.color}`} />
-                  )}
+                  <img 
+                    src={link.logoUrl} 
+                    alt={link.name}
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
                 
                 <h3 className="text-lg font-semibold text-foreground mb-2 font-cyber">
