@@ -1,4 +1,4 @@
-import { Github, Linkedin, MessageSquare } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -7,7 +7,7 @@ const CommunitySection = () => {
     {
       name: "Slack Community",
       description: "Join discussions about AI security & AIVSS implementation",
-      icon: MessageSquare,
+      logoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/2048px-Slack_icon_2019.svg.png",
       url: "https://owasp.slack.com/aivss",
       color: "hover:text-accent",
       bgColor: "hover:bg-accent/10",
@@ -31,7 +31,7 @@ const CommunitySection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-background to-card/50">
+    <section className="py-20 bg-gradient-to-b from-background to-card/50 mb-0">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground font-cyber">
@@ -51,7 +51,15 @@ const CommunitySection = () => {
             >
               <CardContent className="p-6 text-center">
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-lg bg-muted mb-4 transition-all duration-300 ${link.bgColor} group-hover:scale-110`}>
-                  <link.icon className={`w-8 h-8 text-muted-foreground transition-colors duration-300 ${link.color}`} />
+                  {link.logoUrl ? (
+                    <img 
+                      src={link.logoUrl} 
+                      alt={link.name}
+                      className="w-8 h-8 object-contain"
+                    />
+                  ) : (
+                    <link.icon className={`w-8 h-8 text-muted-foreground transition-colors duration-300 ${link.color}`} />
+                  )}
                 </div>
                 
                 <h3 className="text-lg font-semibold text-foreground mb-2 font-cyber">
