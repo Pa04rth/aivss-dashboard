@@ -8,12 +8,12 @@ const Footer = () => {
     {
       name: "LinkedIn",
       icon: Linkedin,
-      url: "https://linkedin.com/in/yourprofile",
+      url: "https://www.linkedin.com/company/owasp-aivss-project/",
     },
     {
       name: "GitHub",
       icon: Github,
-      url: "https://github.com/yourusername",
+      url: "https://vineethsai.github.io/aivss/",
     },
     {
       name: "Email",
@@ -23,7 +23,7 @@ const Footer = () => {
     {
       name: "Website",
       icon: Globe,
-      url: "https://yourwebsite.com",
+      url: "https://aivss.owasp.org/",
     },
   ];
 
@@ -33,9 +33,11 @@ const Footer = () => {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-primary font-cyber">AIVSS Framework</h3>
+            <h3 className="text-xl font-bold text-primary font-cyber">
+              AIVSS Dashboard
+            </h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Open-source AI vulnerability scoring system for autonomous agents. 
+              Open-source AI vulnerability scoring system for autonomous agents.
               Built on OWASP standards for cybersecurity professionals.
             </p>
           </div>
@@ -44,16 +46,28 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-foreground">Resources</h4>
             <div className="space-y-2">
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
+              <a
+                href="#"
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
                 OWASP Documentation
               </a>
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
+              <a
+                href="#"
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
                 Framework Whitepaper
               </a>
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
+              <a
+                href="#"
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
                 Implementation Guide
               </a>
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
+              <a
+                href="#"
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
                 API Documentation
               </a>
             </div>
@@ -99,16 +113,22 @@ const Footer = () => {
             © {currentYear} AIVSS Framework. Open source under MIT License.
           </div>
           <div className="flex gap-6 text-xs text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary transition-colors">Terms of Use</a>
-            <a href="#" className="hover:text-primary transition-colors">Security Policy</a>
+            <a href="#" className="hover:text-primary transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-primary transition-colors">
+              Terms of Use
+            </a>
+            <a href="#" className="hover:text-primary transition-colors">
+              Security Policy
+            </a>
           </div>
         </div>
 
         {/* Developer Credit */}
         <div className="mt-6 pt-6 border-t border-border/50 text-center">
           <p className="text-xs text-muted-foreground/70 font-mono">
-            {`> Crafted with precision by a cybersecurity researcher`}
+            {`> Crafted by Parth Sohaney (Contributor at OWASP OpenCRE)`}
           </p>
           <p className="text-xs text-muted-foreground/50 font-mono mt-1">
             {`{ powered by caffeine && open_source_intelligence }`}
