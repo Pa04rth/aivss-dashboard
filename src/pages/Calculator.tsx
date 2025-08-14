@@ -28,67 +28,73 @@ const Calculator = () => {
 
   const [aarsFactors, setAarsFactors] = useState<AARSFactor[]>([
     {
-      id: "autonomy",
+      id: "autonomy_of_action",
       name: "Autonomy of Action",
       description:
-        "The agent's ability to act independently without human oversight",
+        "The agent's ability to operate and execute tasks without direct, real-time human command or intervention",
       value: 0.5,
     },
     {
       id: "tool_use",
-      name: "Tool Use Capability",
+      name: "Tool Use",
       description:
-        "Access to external tools and APIs that can affect the environment",
+        "The agent's capability to interact with and use external tools, such as APIs, file systems, databases, or other software to affect its environment.",
       value: 0.5,
     },
     {
-      id: "goal_modification",
-      name: "Goal Modification",
+      id: "goal_driven_planning",
+      name: "Goal-Driven Planning",
       description:
-        "Ability to alter its objectives or priorities during execution",
+        "The agent's capacity to receive a high-level objective and independently create, organize, and execute a multi-step plan to achieve it",
       value: 0.0,
     },
     {
-      id: "context_manipulation",
-      name: "Context Manipulation",
-      description: "Capability to influence its own context or environment",
+      id: "contextual_awareness",
+      name: "Contextual Awareness",
+      description:
+        "The agent's sensitivity to its environment and its ability to alter its behavior based on external data, user interactions, or changes in context.",
       value: 0.0,
     },
     {
-      id: "multi_agent_coordination",
-      name: "Multi-Agent Coordination",
-      description: "Ability to communicate and coordinate with other AI agents",
+      id: "multi_agent_interactions",
+      name: "Multi-Agent Interactions",
+      description:
+        "The agent's ability to communicate, coordinate, delegate tasks with, and be influenced by other autonomous agents.",
       value: 0.0,
     },
     {
-      id: "learning_adaptation",
-      name: "Learning & Adaptation",
-      description: "Dynamic learning and behavioral adaptation capabilities",
+      id: "dynamic_identity",
+      name: "Dynamic Identity",
+      description:
+        "The agent's ability to dynamically assume different roles, permissions, or identities as needed to perform its tasks",
       value: 0.5,
     },
     {
-      id: "resource_access",
-      name: "Resource Access",
-      description: "Access to computational, network, or physical resources",
+      id: "memory_use",
+      name: "Memory Use",
+      description:
+        "The use of persistent memory to store information from past interactions and use it to inform future actions and decisions.",
       value: 0.5,
     },
     {
-      id: "persistence",
-      name: "Persistence Mechanisms",
+      id: "non_determinism",
+      name: "Non-Determinism",
       description:
-        "Ability to maintain state and continue operation across sessions",
+        "The inherent unpredictability of the agent's behavior, where the same input does not always produce the exact same output or sequence of actions.",
       value: 0.0,
     },
     {
-      id: "deception_capability",
-      name: "Deception Capability",
-      description: "Potential to mislead users or other systems",
+      id: "opacity_and_reflexivity",
+      name: "Opacity and Reflexivity",
+      description:
+        "The 'black box' nature of the agent's internal reasoning, making it difficult for humans to fully understand why it made a particular decision.",
       value: 0.0,
     },
     {
       id: "self_modification",
       name: "Self-Modification",
-      description: "Ability to modify its own code, parameters, or behavior",
+      description:
+        "The agent's potential to alter its own underlying code, parameters, or core logic during its operation.",
       value: 0.0,
     },
   ]);
