@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -19,92 +25,99 @@ interface AARSFactor {
 const Calculator = () => {
   const [cvssScore, setCvssScore] = useState(5.0);
   const [threatMultiplier, setThreatMultiplier] = useState(1.0);
-  
+
   const [aarsFactors, setAarsFactors] = useState<AARSFactor[]>([
     {
       id: "autonomy",
       name: "Autonomy of Action",
-      description: "The agent's ability to act independently without human oversight",
-      value: 0.5
+      description:
+        "The agent's ability to act independently without human oversight",
+      value: 0.5,
     },
     {
       id: "tool_use",
       name: "Tool Use Capability",
-      description: "Access to external tools and APIs that can affect the environment",
-      value: 0.5
+      description:
+        "Access to external tools and APIs that can affect the environment",
+      value: 0.5,
     },
     {
       id: "goal_modification",
       name: "Goal Modification",
-      description: "Ability to alter its objectives or priorities during execution",
-      value: 0.0
+      description:
+        "Ability to alter its objectives or priorities during execution",
+      value: 0.0,
     },
     {
       id: "context_manipulation",
       name: "Context Manipulation",
       description: "Capability to influence its own context or environment",
-      value: 0.0
+      value: 0.0,
     },
     {
       id: "multi_agent_coordination",
       name: "Multi-Agent Coordination",
       description: "Ability to communicate and coordinate with other AI agents",
-      value: 0.0
+      value: 0.0,
     },
     {
       id: "learning_adaptation",
       name: "Learning & Adaptation",
       description: "Dynamic learning and behavioral adaptation capabilities",
-      value: 0.5
+      value: 0.5,
     },
     {
       id: "resource_access",
       name: "Resource Access",
       description: "Access to computational, network, or physical resources",
-      value: 0.5
+      value: 0.5,
     },
     {
       id: "persistence",
       name: "Persistence Mechanisms",
-      description: "Ability to maintain state and continue operation across sessions",
-      value: 0.0
+      description:
+        "Ability to maintain state and continue operation across sessions",
+      value: 0.0,
     },
     {
       id: "deception_capability",
       name: "Deception Capability",
       description: "Potential to mislead users or other systems",
-      value: 0.0
+      value: 0.0,
     },
     {
       id: "self_modification",
       name: "Self-Modification",
       description: "Ability to modify its own code, parameters, or behavior",
-      value: 0.0
-    }
+      value: 0.0,
+    },
   ]);
 
   const handleFactorChange = (id: string, value: number) => {
-    setAarsFactors(prev => 
-      prev.map(factor => 
-        factor.id === id ? { ...factor, value } : factor
-      )
+    setAarsFactors((prev) =>
+      prev.map((factor) => (factor.id === id ? { ...factor, value } : factor))
     );
   };
 
   // Calculate AARS score (average of all factors * 10)
-  const aarsScore = (aarsFactors.reduce((sum, factor) => sum + factor.value, 0) / aarsFactors.length) * 10;
-  
+  const aarsScore =
+    (aarsFactors.reduce((sum, factor) => sum + factor.value, 0) /
+      aarsFactors.length) *
+    10;
+
   // Calculate final AIVSS score
-  const aivssScore = ((cvssScore + aarsScore) / 2) * threatMultiplier;
+  const aarsScore = aarsFactors.reduce((sum, factor) => sum + factor.value, 0);
 
   // Generate vector string (simplified)
-  const vectorString = `AIVSS:1.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:O/RC:C/AARS:${aarsScore.toFixed(1)}/TM:${threatMultiplier}`;
+  const vectorString = `AIVSS:1.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:O/RC:C/AARS:${aarsScore.toFixed(
+    1
+  )}/TM:${threatMultiplier}`;
 
   const threatMultiplierOptions = [
     { value: "0.5", label: "Low Threat Environment (0.5)" },
     { value: "1.0", label: "Standard Environment (1.0)" },
     { value: "1.5", label: "High Threat Environment (1.5)" },
-    { value: "2.0", label: "Critical Infrastructure (2.0)" }
+    { value: "2.0", label: "Critical Infrastructure (2.0)" },
   ];
 
   return (
@@ -120,8 +133,12 @@ const Calculator = () => {
               </Button>
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-primary">AIVSS Calculator</h1>
-              <p className="text-sm text-muted-foreground">Dynamic AI Vulnerability Assessment Tool</p>
+              <h1 className="text-2xl font-bold text-primary">
+                AIVSS Calculator
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Dynamic AI Vulnerability Assessment Tool
+              </p>
             </div>
           </div>
         </div>
@@ -131,11 +148,13 @@ const Calculator = () => {
       <div className="container mx-auto px-6 py-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            <span className="text-primary">Dynamically Assess</span> Your Agent's Risk Profile
+            <span className="text-primary">Dynamically Assess</span> Your
+            Agent's Risk Profile
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Use the controls below to define your vulnerability scenario and the agent's capabilities. 
-            The AIVSS score will update in real-time, providing immediate feedback.
+            Use the controls below to define your vulnerability scenario and the
+            agent's capabilities. The AIVSS score will update in real-time,
+            providing immediate feedback.
           </p>
         </div>
 
@@ -145,13 +164,17 @@ const Calculator = () => {
             {/* CVSS Base Score */}
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
-                <CardTitle className="text-foreground">CVSS Base Score</CardTitle>
+                <CardTitle className="text-foreground">
+                  CVSS Base Score
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-sm text-muted-foreground">Score</span>
-                    <span className="text-sm font-medium text-foreground">{cvssScore.toFixed(1)}</span>
+                    <span className="text-sm font-medium text-foreground">
+                      {cvssScore.toFixed(1)}
+                    </span>
                   </div>
                   <Slider
                     value={[cvssScore]}
@@ -168,15 +191,22 @@ const Calculator = () => {
             {/* Threat Multiplier */}
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
-                <CardTitle className="text-foreground">Threat Multiplier</CardTitle>
+                <CardTitle className="text-foreground">
+                  Threat Multiplier
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <Select value={threatMultiplier.toString()} onValueChange={(value) => setThreatMultiplier(parseFloat(value))}>
+                <Select
+                  value={threatMultiplier.toString()}
+                  onValueChange={(value) =>
+                    setThreatMultiplier(parseFloat(value))
+                  }
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {threatMultiplierOptions.map(option => (
+                    {threatMultiplierOptions.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
                         {option.label}
                       </SelectItem>
@@ -187,7 +217,10 @@ const Calculator = () => {
             </Card>
 
             {/* AARS Factors */}
-            <AARSFactors factors={aarsFactors} onFactorChange={handleFactorChange} />
+            <AARSFactors
+              factors={aarsFactors}
+              onFactorChange={handleFactorChange}
+            />
           </div>
 
           {/* Center Column - Scores */}

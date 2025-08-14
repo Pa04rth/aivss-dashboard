@@ -8,22 +8,22 @@ const Footer = () => {
     {
       name: "LinkedIn",
       icon: Linkedin,
-      url: "https://www.linkedin.com/company/owasp-aivss-project/",
+      url: "http://www.linkedin.com/in/parthsohaney",
     },
     {
       name: "GitHub",
       icon: Github,
-      url: "https://vineethsai.github.io/aivss/",
+      url: "https://github.com/Pa04rth",
     },
     {
       name: "Email",
       icon: Mail,
-      url: "mailto:your.email@example.com",
+      url: "mailto:parthsohaney04@gmail.com",
     },
     {
       name: "Website",
       icon: Globe,
-      url: "https://aivss.owasp.org/",
+      url: "https://www.parthsohaney.online/",
     },
   ];
 
@@ -78,7 +78,9 @@ const Footer = () => {
 
           {/* Contact Section */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-foreground">Connect</h4>
+            <h4 className="text-lg font-semibold text-foreground">
+              Connect to Parth
+            </h4>
             <div className="flex gap-3">
               {socialLinks.map((link) => (
                 <Button
@@ -101,10 +103,10 @@ const Footer = () => {
             </div>
             <div className="space-y-1">
               <p className="text-xs text-muted-foreground">
-                Available for consulting & research collaboration
+                Contributor at OWASP OpenCRE
               </p>
               <p className="text-xs text-muted-foreground">
-                Security audits & AI risk assessments
+                Available for collaboration and contributions.
               </p>
             </div>
           </div>
