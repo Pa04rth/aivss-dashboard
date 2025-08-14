@@ -17,7 +17,7 @@ const FrameworkSection = () => {
             <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-foreground">Formula Visualization</h3>
             
             <div className="code-block text-center">
-              <div className="font-mono text-sm sm:text-lg md:text-xl text-primary whitespace-nowrap overflow-x-auto">
+              <div className="font-mono text-sm sm:text-lg md:text-xl text-primary whitespace-nowrap">
                 AIVSS Score = ((CVSS Base Score + AARS) / 2) × Threat Multiplier
               </div>
             </div>
