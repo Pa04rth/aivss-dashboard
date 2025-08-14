@@ -24,7 +24,7 @@ interface AARSFactor {
 
 const Calculator = () => {
   const [cvssScore, setCvssScore] = useState(5.0);
-  const [threatMultiplier, setThreatMultiplier] = useState(1.0);
+  const [threatMultiplier, setThreatMultiplier] = useState(0.97);
 
   const [aarsFactors, setAarsFactors] = useState<AARSFactor[]>([
     {
