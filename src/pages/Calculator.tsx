@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import AARSFactors from "@/components/calculator/AARSFactors";
 import ScoreDisplay from "@/components/calculator/ScoreDisplay";
 import VisualizationPanel from "@/components/calculator/VisualizationPanel";
-
+import owaspScenarios from "@/data/owaspTop10Scenarios.json";
 interface AARSFactor {
   id: string;
   name: string;
@@ -103,6 +103,27 @@ const Calculator = () => {
     setAarsFactors((prev) =>
       prev.map((factor) => (factor.id === id ? { ...factor, value } : factor))
     );
+  };
+
+  const handleScenarioChange = (scenarioName: string) => {
+    // Find the selected scenario from our imported JSON data
+    const scenario = owaspScenarios.find((s) => s.name === scenarioName);
+
+    // If a match is found, update the application's state
+    if (scenario) {
+      setAarsFactors(
+        scenario.aarsFactors.map((factor: { id: string; value: number }) => {
+          const defaultFactor = aarsFactors.find((f) => f.id === factor.id);
+          return {
+            id: factor.id,
+            value: factor.value,
+            name: defaultFactor?.name ?? "",
+            description: defaultFactor?.description ?? "",
+          };
+        })
+      );
+      setCvssScore(scenario.cvssScore);
+    }
   };
 
   // Calculate AARS score (average of all factors * 10)
@@ -211,6 +232,31 @@ const Calculator = () => {
                     {threatMultiplierOptions.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
                         {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </CardContent>
+            </Card>
+            {/* Owasp top 10 scenarious load */}
+            <Card className="bg-gradient-card border-border shadow-card">
+              <CardHeader>
+                <CardTitle className="text-foreground">
+                  Load Pre-defined OWASP Scenarios
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Select a scenario to instantly load its official scores.
+                </p>
+                <Select onValueChange={handleScenarioChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a Scenario ..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {owaspScenarios.map((scenario, index) => (
+                      <SelectItem key={index} value={scenario.name}>
+                        {scenario.name}
                       </SelectItem>
                     ))}
                   </SelectContent>

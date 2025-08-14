@@ -1,0 +1,162 @@
+[
+  {
+    "name": "1. Agentic AI Tool Misuse",
+    "cvssScore": 9.4,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 1.0 },
+      { "id": "tool_use", "value": 1.0 },
+      { "id": "memory_use", "value": 0.5 },
+      { "id": "dynamic_identity", "value": 0.5 },
+      { "id": "multi_agent_interactions", "value": 0.0 },
+      { "id": "non_determinism", "value": 1.0 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 1.0 },
+      { "id": "contextual_awareness", "value": 1.0 },
+      { "id": "opacity_and_reflexivity", "value": 1.0 }
+    ]
+  },
+  {
+    "name": "2. Agent Access Control Violation",
+    "cvssScore": 8.7,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 1.0 },
+      { "id": "tool_use", "value": 0.5 },
+      { "id": "memory_use", "value": 1.0 },
+      { "id": "dynamic_identity", "value": 1.0 },
+      { "id": "multi_agent_interactions", "value": 0.5 },
+      { "id": "non_determinism", "value": 0.5 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 0.5 },
+      { "id": "contextual_awareness", "value": 0.5 },
+      { "id": "opacity_and_reflexivity", "value": 1.0 }
+    ]
+  },
+  {
+    "name": "3. Agent Cascading Failures",
+    "cvssScore": 7.1,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 1.0 },
+      { "id": "tool_use", "value": 0.5 },
+      { "id": "memory_use", "value": 0.5 },
+      { "id": "dynamic_identity", "value": 0.5 },
+      { "id": "multi_agent_interactions", "value": 1.0 },
+      { "id": "non_determinism", "value": 1.0 },
+      { "id": "self_modification", "value": 0.5 },
+      { "id": "goal_driven_planning", "value": 0.5 },
+      { "id": "contextual_awareness", "value": 0.5 },
+      { "id": "opacity_and_reflexivity", "value": 1.0 }
+    ]
+  },
+  {
+    "name": "4. Agent Orchestration & Multi-Agent Exploitation",
+    "cvssScore": 8.3,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 1.0 },
+      { "id": "tool_use", "value": 0.5 },
+      { "id": "memory_use", "value": 0.5 },
+      { "id": "dynamic_identity", "value": 1.0 },
+      { "id": "multi_agent_interactions", "value": 1.0 },
+      { "id": "non_determinism", "value": 0.0 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 1.0 },
+      { "id": "contextual_awareness", "value": 0.0 },
+      { "id": "opacity_and_reflexivity", "value": 1.0 }
+    ]
+  },
+  {
+    "name": "5. Agent Identity Impersonation",
+    "cvssScore": 7.4,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 0.5 },
+      { "id": "tool_use", "value": 0.5 },
+      { "id": "memory_use", "value": 0.0 },
+      { "id": "dynamic_identity", "value": 1.0 },
+      { "id": "multi_agent_interactions", "value": 0.5 },
+      { "id": "non_determinism", "value": 0.5 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 0.5 },
+      { "id": "contextual_awareness", "value": 1.0 },
+      { "id": "opacity_and_reflexivity", "value": 0.5 }
+    ]
+  },
+  {
+    "name": "6. Insecure Agent Critical Systems Interaction",
+    "cvssScore": 6.9,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 1.0 },
+      { "id": "tool_use", "value": 1.0 },
+      { "id": "memory_use", "value": 0.0 },
+      { "id": "dynamic_identity", "value": 0.5 },
+      { "id": "multi_agent_interactions", "value": 0.0 },
+      { "id": "non_determinism", "value": 0.5 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 1.0 },
+      { "id": "contextual_awareness", "value": 0.5 },
+      { "id": "opacity_and_reflexivity", "value": 0.5 }
+    ]
+  },
+  {
+    "name": "7. Agent Memory and Context Manipulation",
+    "cvssScore": 5.8,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 1.0 },
+      { "id": "tool_use", "value": 0.5 },
+      { "id": "memory_use", "value": 1.0 },
+      { "id": "dynamic_identity", "value": 0.5 },
+      { "id": "multi_agent_interactions", "value": 0.0 },
+      { "id": "non_determinism", "value": 0.5 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 0.5 },
+      { "id": "contextual_awareness", "value": 1.0 },
+      { "id": "opacity_and_reflexivity", "value": 0.5 }
+    ]
+  },
+  {
+    "name": "8. Agent Supply Chain and Dependency Attacks",
+    "cvssScore": 9.3,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 0.5 },
+      { "id": "tool_use", "value": 0.5 },
+      { "id": "memory_use", "value": 0.0 },
+      { "id": "dynamic_identity", "value": 0.0 },
+      { "id": "multi_agent_interactions", "value": 0.0 },
+      { "id": "non_determinism", "value": 0.0 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 0.0 },
+      { "id": "contextual_awareness", "value": 0.0 },
+      { "id": "opacity_and_reflexivity", "value": 0.0 }
+    ]
+  },
+  {
+    "name": "9. Agent Untraceability",
+    "cvssScore": 5.3,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 0.5 },
+      { "id": "tool_use", "value": 0.0 },
+      { "id": "memory_use", "value": 0.5 },
+      { "id": "dynamic_identity", "value": 0.5 },
+      { "id": "multi_agent_interactions", "value": 1.0 },
+      { "id": "non_determinism", "value": 0.5 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 0.0 },
+      { "id": "contextual_awareness", "value": 0.0 },
+      { "id": "opacity_and_reflexivity", "value": 1.0 }
+    ]
+  },
+  {
+    "name": "10. Agent Goal and Instruction Manipulation",
+    "cvssScore": 2.1,
+    "aarsFactors": [
+      { "id": "autonomy_of_action", "value": 0.5 },
+      { "id": "tool_use", "value": 0.5 },
+      { "id": "memory_use", "value": 0.0 },
+      { "id": "dynamic_identity", "value": 0.0 },
+      { "id": "multi_agent_interactions", "value": 0.0 },
+      { "id": "non_determinism", "value": 1.0 },
+      { "id": "self_modification", "value": 0.0 },
+      { "id": "goal_driven_planning", "value": 1.0 },
+      { "id": "contextual_awareness", "value": 1.0 },
+      { "id": "opacity_and_reflexivity", "value": 0.0 }
+    ]
+  }
+]
