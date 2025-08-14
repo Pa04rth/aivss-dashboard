@@ -100,13 +100,10 @@ const Calculator = () => {
   };
 
   // Calculate AARS score (average of all factors * 10)
-  const aarsScore =
-    (aarsFactors.reduce((sum, factor) => sum + factor.value, 0) /
-      aarsFactors.length) *
-    10;
+  const aarsScore = aarsFactors.reduce((sum, factor) => sum + factor.value, 0);
 
   // Calculate final AIVSS score
-  const aarsScore = aarsFactors.reduce((sum, factor) => sum + factor.value, 0);
+  const aivssScore = ((cvssScore + aarsScore) / 2) * threatMultiplier;
 
   // Generate vector string (simplified)
   const vectorString = `AIVSS:1.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:O/RC:C/AARS:${aarsScore.toFixed(
