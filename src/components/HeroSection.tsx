@@ -44,8 +44,13 @@ const HeroSection = () => {
             <Button
               size="lg"
               variant="outline"
-              onClick={() => scrollToElement("framework")}
               className="w-full sm:w-auto text-base bg-card border-border text-muted-foreground hover:bg-muted hover:text-foreground rounded-md px-8 py-6"
+              onClick={() =>
+                window.open(
+                  "https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.5.pdf",
+                  "_blank"
+                )
+              }
             >
               <BookOpen className="w-5 h-5 mr-3" />
               Learn about the Framework

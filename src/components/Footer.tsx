@@ -33,9 +33,12 @@ const Footer = () => {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-primary font-cyber">
-              AIVSS Dashboard
-            </h3>
+            <div className="flex items-center space-x-3">
+              <img src="owasp-logo-light.svg" alt="OWASP" className="h-8 w-8" />
+              <h3 className="text-xl font-bold text-primary font-cyber">
+                AIVSS Dashboard
+              </h3>
+            </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Open-source AI vulnerability scoring system for autonomous agents.
               Built on OWASP standards for cybersecurity professionals.
