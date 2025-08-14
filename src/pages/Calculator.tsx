@@ -117,10 +117,9 @@ const Calculator = () => {
   )}/TM:${threatMultiplier}`;
 
   const threatMultiplierOptions = [
-    { value: "0.5", label: "Low Threat Environment (0.5)" },
-    { value: "1.0", label: "Standard Environment (1.0)" },
-    { value: "1.5", label: "High Threat Environment (1.5)" },
-    { value: "2.0", label: "Critical Infrastructure (2.0)" },
+    { value: "1.0", label: "Actively Exploited (E=A) - 1.0" },
+    { value: "0.97", label: "Proof-of-Concept (E=P) - 0.97" },
+    { value: "0.91", label: "Unreported (E=U) - 0.91" },
   ];
 
   return (
