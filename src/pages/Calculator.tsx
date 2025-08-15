@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import clsx from "clsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
@@ -176,22 +177,27 @@ const Calculator = () => {
   const handleDeleteProfile = (profileId: number) => {
     setProfiles(profiles.filter((profile) => profile.id !== profileId));
   };
-  const handleSelectForCompare = (profile: Profile) => {
-    if (
-      comparisonSlots[0]?.id === profile.id ||
-      comparisonSlots[1]?.id === profile.id
-    )
-      return;
-    if (comparisonSlots[0] === null) {
-      setComparisonSlots([profile, null]);
-    } else {
-      setComparisonSlots([comparisonSlots[0], profile]);
-    }
-  };
   const handleClearComparison = () => {
     setComparisonSlots([null, null]);
   };
-
+  const handleSelectForCompare = (profile: Profile) => {
+    const [slotA, slotB] = comparisonSlots;
+    if (slotA?.id === profile.id) {
+      setComparisonSlots([slotB, null]);
+      return;
+    }
+    if (slotB?.id === profile.id) {
+      setComparisonSlots([slotA, null]);
+      return;
+    }
+    if (slotA === null) {
+      setComparisonSlots([profile, null]);
+    } else if (slotB === null) {
+      setComparisonSlots([slotA, profile]);
+    } else {
+      setComparisonSlots([slotA, profile]);
+    }
+  };
   const handleGenerateReport = async () => {
     if (!visPanelRef.current) return;
     setIsGeneratingReport(true);
@@ -350,67 +356,85 @@ const Calculator = () => {
                       No profiles saved yet.
                     </p>
                   ) : (
-                    profiles.map((profile) => (
-                      <div
-                        key={profile.id}
-                        className="flex justify-between items-center p-2 bg-muted rounded-md"
-                      >
-                        <span className="text-sm font-medium">
-                          {profile.name}
-                        </span>
-                        <div className="flex items-center gap-1">
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                  onClick={() =>
-                                    handleSelectForCompare(profile)
-                                  }
-                                >
-                                  <GitCompare className="w-4 h-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>Compare</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                  onClick={() => handleLoadProfile(profile.id)}
-                                >
-                                  <Download className="w-4 h-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>Load</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 text-destructive hover:text-destructive"
-                                  onClick={() =>
-                                    handleDeleteProfile(profile.id)
-                                  }
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>Delete</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+                    profiles.map((profile) => {
+                      const isSelected = comparisonSlots.some(
+                        (slot) => slot?.id === profile.id
+                      );
+                      return (
+                        <div
+                          key={profile.id}
+                          className={clsx(
+                            "flex justify-between items-center p-2 rounded-md transition-all duration-200 border",
+                            {
+                              "bg-primary/10 border-primary shadow-md":
+                                isSelected,
+                              "bg-muted border-transparent": !isSelected,
+                            }
+                          )}
+                        >
+                          <span className="text-sm font-medium">
+                            {profile.name}
+                          </span>
+                          <div className="flex items-center gap-1">
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8"
+                                    onClick={() =>
+                                      handleSelectForCompare(profile)
+                                    }
+                                  >
+                                    <GitCompare
+                                      className={clsx("w-4 h-4", {
+                                        "text-primary": isSelected,
+                                      })}
+                                    />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Compare</TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8"
+                                    onClick={() =>
+                                      handleLoadProfile(profile.id)
+                                    }
+                                  >
+                                    <Download className="w-4 h-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Load</TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 text-destructive hover:text-destructive"
+                                    onClick={() =>
+                                      handleDeleteProfile(profile.id)
+                                    }
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Delete</TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
                         </div>
-                      </div>
-                    ))
+                      );
+                    })
                   )}
                 </div>
               </CardContent>
@@ -445,6 +469,7 @@ const Calculator = () => {
             cvssScore={cvssScore}
           />
         </div>
+
         {comparisonSlots[0] && comparisonSlots[1] && (
           <div className="mt-16 pt-8 border-t-2 border-primary/20">
             <div className="flex justify-between items-center mb-8">
@@ -460,6 +485,7 @@ const Calculator = () => {
                 Clear Comparison
               </Button>
             </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {[comparisonSlots[0], comparisonSlots[1]].map(
                 (profile, index) => {
@@ -491,6 +517,7 @@ const Calculator = () => {
                           vectorString={pVectorString}
                         />
                         <VisualizationPanel
+                          key={profile.id}
                           factors={profile.inputs.aarsFactors}
                           aarsScore={pAarsScore}
                           cvssScore={profile.inputs.cvssScore}

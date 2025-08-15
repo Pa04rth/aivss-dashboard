@@ -1,5 +1,3 @@
-// src/components/calculator/VisualizationPanel.tsx
-
 import React, { useRef, useImperativeHandle } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -14,7 +12,7 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Cell, // 1. Import the Cell component from recharts
+  Cell,
 } from "recharts";
 import html2canvas from "html2canvas";
 
@@ -77,7 +75,6 @@ const VisualizationPanel = React.forwardRef<
     fullMark: 1.0,
   }));
 
-  // 2. The barData now correctly defines the colors we will use in the Cells
   const barData = [
     { name: "CVSS Base", score: cvssScore, fill: "hsl(var(--chart-1))" },
     { name: "AARS", score: aarsScore, fill: "hsl(var(--chart-2))" },
@@ -165,9 +162,8 @@ const VisualizationPanel = React.forwardRef<
                     }}
                     width={60}
                   />
-                  {/* --- FIX IS HERE --- */}
+
                   <Bar dataKey="score" radius={[0, 4, 4, 0]}>
-                    {/* 3. Map over the data to create a Cell for each bar with its specific color */}
                     {barData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.fill} />
                     ))}
