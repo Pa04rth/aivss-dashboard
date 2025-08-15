@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { generateReport } from "@/lib/reportGenerator";
-import html2canvas from "html2canvas";
 import {
   Select,
   SelectContent,
@@ -30,19 +29,17 @@ import {
 import { Link } from "react-router-dom";
 import AARSFactors from "@/components/calculator/AARSFactors";
 import ScoreDisplay from "@/components/calculator/ScoreDisplay";
-import VisualizationPanel from "@/components/calculator/VisualizationPanel";
+import VisualizationPanel, {
+  VisualizationPanelHandle,
+} from "@/components/calculator/VisualizationPanel";
 import owaspScenarios from "@/data/owaspTop10Scenarios.json";
 
-// --- TYPE DEFINITIONS ---
-// The core structure for a single AARS factor
 interface AARSFactor {
   id: string;
   name: string;
   description: string;
   value: number;
 }
-
-// The structure for a saved assessment profile
 interface Profile {
   id: number;
   name: string;
@@ -53,7 +50,6 @@ interface Profile {
   };
 }
 
-// Initial state for the 10 AARS factors, serving as a single source of truth for names/descriptions
 const initialAarsFactors: AARSFactor[] = [
   {
     id: "autonomy_of_action",
@@ -128,7 +124,6 @@ const initialAarsFactors: AARSFactor[] = [
 ];
 
 const Calculator = () => {
-  // --- STATE MANAGEMENT ---
   const [cvssScore, setCvssScore] = useState(5.0);
   const [threatMultiplier, setThreatMultiplier] = useState(0.97);
   const [aarsFactors, setAarsFactors] =
@@ -140,15 +135,13 @@ const Calculator = () => {
     null,
   ]);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
-  const mainVisPanelRef = useRef<HTMLDivElement>(null);
+  const visPanelRef = useRef<VisualizationPanelHandle>(null);
 
-  // --- LOGIC / HANDLERS ---
   const handleFactorChange = (id: string, value: number) => {
     setAarsFactors((prev) =>
       prev.map((factor) => (factor.id === id ? { ...factor, value } : factor))
     );
   };
-
   const handleScenarioChange = (scenarioName: string) => {
     const scenario = owaspScenarios.find((s) => s.name === scenarioName);
     if (scenario) {
@@ -161,7 +154,6 @@ const Calculator = () => {
       setCvssScore(scenario.cvssScore);
     }
   };
-
   const handleSaveProfile = () => {
     if (profileName.trim() === "") return;
     const newProfile: Profile = {
@@ -172,7 +164,6 @@ const Calculator = () => {
     setProfiles([...profiles, newProfile]);
     setProfileName("");
   };
-
   const handleLoadProfile = (profileId: number) => {
     const profile = profiles.find((p) => p.id === profileId);
     if (profile) {
@@ -182,11 +173,9 @@ const Calculator = () => {
       setProfileName(profile.name);
     }
   };
-
   const handleDeleteProfile = (profileId: number) => {
     setProfiles(profiles.filter((profile) => profile.id !== profileId));
   };
-
   const handleSelectForCompare = (profile: Profile) => {
     if (
       comparisonSlots[0]?.id === profile.id ||
@@ -199,31 +188,25 @@ const Calculator = () => {
       setComparisonSlots([comparisonSlots[0], profile]);
     }
   };
-
   const handleClearComparison = () => {
     setComparisonSlots([null, null]);
   };
 
   const handleGenerateReport = async () => {
-    if (!mainVisPanelRef.current) {
-      alert("Error: Visualization panel is not available to capture.");
-      return;
-    }
+    if (!visPanelRef.current) return;
     setIsGeneratingReport(true);
     try {
-      const canvas = await html2canvas(mainVisPanelRef.current, {
-        backgroundColor: null,
-        scale: 2,
-      });
-      const chartImage = canvas.toDataURL("image/png");
-
-      generateReport({
+      const { radarImage, barImage, distImage } =
+        await visPanelRef.current.captureImages();
+      await generateReport({
         aivssScore,
         aarsScore,
         cvssScore,
         vectorString,
         aarsFactors,
-        chartImage,
+        radarImage,
+        barImage,
+        distImage,
       });
     } catch (error) {
       console.error("Error generating report:", error);
@@ -233,21 +216,17 @@ const Calculator = () => {
     }
   };
 
-  // --- CALCULATIONS ---
   const aarsScore = aarsFactors.reduce((sum, factor) => sum + factor.value, 0);
   const aivssScore = ((cvssScore + aarsScore) / 2) * threatMultiplier;
   const vectorString = `(CVSS:${cvssScore.toFixed(1)}/AARS:${aarsScore.toFixed(
     1
   )})`;
-
-  // --- UI DATA ---
   const threatMultiplierOptions = [
     { value: "1.0", label: "Actively Exploited (E=A) - 1.0" },
     { value: "0.97", label: "Proof-of-Concept (E=P) - 0.97" },
     { value: "0.91", label: "Unreported (E=U) - 0.91" },
   ];
 
-  // --- RENDER ---
   return (
     <div className="min-h-screen bg-background text-foreground font-cyber">
       <div className="border-b border-border bg-gradient-card">
@@ -270,7 +249,6 @@ const Calculator = () => {
           </div>
         </div>
       </div>
-
       <div className="container mx-auto px-6 py-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
@@ -283,7 +261,6 @@ const Calculator = () => {
             providing immediate feedback.
           </p>
         </div>
-
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="space-y-6">
             <Card className="bg-gradient-card border-border shadow-card">
@@ -306,7 +283,6 @@ const Calculator = () => {
                 />
               </CardContent>
             </Card>
-
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
                 <CardTitle>Threat Multiplier</CardTitle>
@@ -329,7 +305,6 @@ const Calculator = () => {
                 </Select>
               </CardContent>
             </Card>
-
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
                 <CardTitle>Load Pre-defined OWASP Scenarios</CardTitle>
@@ -349,7 +324,6 @@ const Calculator = () => {
                 </Select>
               </CardContent>
             </Card>
-
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
                 <CardTitle>Scenario Profiles</CardTitle>
@@ -441,13 +415,11 @@ const Calculator = () => {
                 </div>
               </CardContent>
             </Card>
-
             <AARSFactors
               factors={aarsFactors}
               onFactorChange={handleFactorChange}
             />
           </div>
-
           <div className="space-y-4">
             <ScoreDisplay
               aivssScore={aivssScore}
@@ -466,16 +438,13 @@ const Calculator = () => {
                 : "Generate PDF Report"}
             </Button>
           </div>
-
-          <div ref={mainVisPanelRef}>
-            <VisualizationPanel
-              factors={aarsFactors}
-              aarsScore={aarsScore}
-              cvssScore={cvssScore}
-            />
-          </div>
+          <VisualizationPanel
+            ref={visPanelRef}
+            factors={aarsFactors}
+            aarsScore={aarsScore}
+            cvssScore={cvssScore}
+          />
         </div>
-
         {comparisonSlots[0] && comparisonSlots[1] && (
           <div className="mt-16 pt-8 border-t-2 border-primary/20">
             <div className="flex justify-between items-center mb-8">
@@ -491,7 +460,6 @@ const Calculator = () => {
                 Clear Comparison
               </Button>
             </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {[comparisonSlots[0], comparisonSlots[1]].map(
                 (profile, index) => {
@@ -506,7 +474,6 @@ const Calculator = () => {
                   const pVectorString = `(CVSS:${profile.inputs.cvssScore.toFixed(
                     1
                   )}/AARS:${pAarsScore.toFixed(1)})`;
-
                   return (
                     <div key={profile.id}>
                       <h3
