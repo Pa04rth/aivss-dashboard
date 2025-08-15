@@ -10,12 +10,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import {
+  ArrowLeft,
+  Trash2,
+  Download,
+  Save,
+  GitCompare,
+  XCircle,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import AARSFactors from "@/components/calculator/AARSFactors";
 import ScoreDisplay from "@/components/calculator/ScoreDisplay";
 import VisualizationPanel from "@/components/calculator/VisualizationPanel";
 import owaspScenarios from "@/data/owaspTop10Scenarios.json";
+
+// --- TYPE DEFINITIONS ---
+// The core structure for a single AARS factor
 interface AARSFactor {
   id: string;
   name: string;
@@ -23,6 +33,7 @@ interface AARSFactor {
   value: number;
 }
 
+// The structure for a saved assessment profile
 interface Profile {
   id: number;
   name: string;
@@ -33,85 +44,95 @@ interface Profile {
   };
 }
 
+// Initial state for the 10 AARS factors
+const initialAarsFactors: AARSFactor[] = [
+  {
+    id: "autonomy_of_action",
+    name: "Autonomy of Action",
+    description:
+      "The agent's ability to operate and execute tasks without direct, real-time human command or intervention.",
+    value: 0.5,
+  },
+  {
+    id: "tool_use",
+    name: "Tool Use",
+    description:
+      "The agent's capability to interact with and use external tools, such as APIs, file systems, or databases to affect its environment.",
+    value: 0.5,
+  },
+  {
+    id: "memory_use",
+    name: "Memory Use",
+    description:
+      "The use of persistent memory to store information from past interactions and use it to inform future actions and decisions.",
+    value: 0.5,
+  },
+  {
+    id: "dynamic_identity",
+    name: "Dynamic Identity",
+    description:
+      "The agent's ability to dynamically assume different roles, permissions, or identities as needed to perform its tasks.",
+    value: 0.5,
+  },
+  {
+    id: "multi_agent_interactions",
+    name: "Multi-Agent Interactions",
+    description:
+      "The agent's ability to communicate, coordinate, delegate tasks with, and be influenced by other autonomous agents.",
+    value: 0.0,
+  },
+  {
+    id: "non_determinism",
+    name: "Non-Determinism",
+    description:
+      "The inherent unpredictability of the agent's behavior, where the same input does not always produce the exact same output.",
+    value: 0.0,
+  },
+  {
+    id: "self_modification",
+    name: "Self-Modification",
+    description:
+      "The agent's potential to alter its own underlying code, parameters, or core logic during its operation.",
+    value: 0.0,
+  },
+  {
+    id: "goal_driven_planning",
+    name: "Goal-Driven Planning",
+    description:
+      "The agent's capacity to receive a high-level objective and independently create and execute a multi-step plan to achieve it.",
+    value: 0.0,
+  },
+  {
+    id: "contextual_awareness",
+    name: "Contextual Awareness",
+    description:
+      "The agent's sensitivity to its environment and its ability to alter its behavior based on external data or changes in context.",
+    value: 0.0,
+  },
+  {
+    id: "opacity_and_reflexivity",
+    name: "Opacity and Reflexivity",
+    description:
+      "The 'black box' nature of the agent's internal reasoning, making it difficult for humans to fully understand why it made a particular decision.",
+    value: 0.0,
+  },
+];
+
 const Calculator = () => {
+  // --- STATE MANAGEMENT ---
   const [cvssScore, setCvssScore] = useState(5.0);
   const [threatMultiplier, setThreatMultiplier] = useState(0.97);
+  const [aarsFactors, setAarsFactors] =
+    useState<AARSFactor[]>(initialAarsFactors);
+
   const [profiles, setProfiles] = useState<Profile[]>([]);
-  // State variable which user type in profile field
   const [profileName, setProfileName] = useState("");
-  const [aarsFactors, setAarsFactors] = useState<AARSFactor[]>([
-    {
-      id: "autonomy_of_action",
-      name: "Autonomy of Action",
-      description:
-        "The agent's ability to operate and execute tasks without direct, real-time human command or intervention",
-      value: 0.5,
-    },
-    {
-      id: "tool_use",
-      name: "Tool Use",
-      description:
-        "The agent's capability to interact with and use external tools, such as APIs, file systems, databases, or other software to affect its environment.",
-      value: 0.5,
-    },
-    {
-      id: "goal_driven_planning",
-      name: "Goal-Driven Planning",
-      description:
-        "The agent's capacity to receive a high-level objective and independently create, organize, and execute a multi-step plan to achieve it",
-      value: 0.0,
-    },
-    {
-      id: "contextual_awareness",
-      name: "Contextual Awareness",
-      description:
-        "The agent's sensitivity to its environment and its ability to alter its behavior based on external data, user interactions, or changes in context.",
-      value: 0.0,
-    },
-    {
-      id: "multi_agent_interactions",
-      name: "Multi-Agent Interactions",
-      description:
-        "The agent's ability to communicate, coordinate, delegate tasks with, and be influenced by other autonomous agents.",
-      value: 0.0,
-    },
-    {
-      id: "dynamic_identity",
-      name: "Dynamic Identity",
-      description:
-        "The agent's ability to dynamically assume different roles, permissions, or identities as needed to perform its tasks",
-      value: 0.5,
-    },
-    {
-      id: "memory_use",
-      name: "Memory Use",
-      description:
-        "The use of persistent memory to store information from past interactions and use it to inform future actions and decisions.",
-      value: 0.5,
-    },
-    {
-      id: "non_determinism",
-      name: "Non-Determinism",
-      description:
-        "The inherent unpredictability of the agent's behavior, where the same input does not always produce the exact same output or sequence of actions.",
-      value: 0.0,
-    },
-    {
-      id: "opacity_and_reflexivity",
-      name: "Opacity and Reflexivity",
-      description:
-        "The 'black box' nature of the agent's internal reasoning, making it difficult for humans to fully understand why it made a particular decision.",
-      value: 0.0,
-    },
-    {
-      id: "self_modification",
-      name: "Self-Modification",
-      description:
-        "The agent's potential to alter its own underlying code, parameters, or core logic during its operation.",
-      value: 0.0,
-    },
+  const [comparisonSlots, setComparisonSlots] = useState<(Profile | null)[]>([
+    null,
+    null,
   ]);
 
+  // --- LOGIC / HANDLERS ---
   const handleFactorChange = (id: string, value: number) => {
     setAarsFactors((prev) =>
       prev.map((factor) => (factor.id === id ? { ...factor, value } : factor))
@@ -119,22 +140,14 @@ const Calculator = () => {
   };
 
   const handleScenarioChange = (scenarioName: string) => {
-    // Find the selected scenario from our imported JSON data
     const scenario = owaspScenarios.find((s) => s.name === scenarioName);
-
-    // If a match is found, update the application's state
     if (scenario) {
-      setAarsFactors(
-        scenario.aarsFactors.map((factor: { id: string; value: number }) => {
-          const defaultFactor = aarsFactors.find((f) => f.id === factor.id);
-          return {
-            id: factor.id,
-            value: factor.value,
-            name: defaultFactor?.name ?? "",
-            description: defaultFactor?.description ?? "",
-          };
-        })
-      );
+      const newFactors = initialAarsFactors.map((def) => {
+        const scenarioValue =
+          scenario.aarsFactors.find((f) => f.id === def.id)?.value ?? 0;
+        return { ...def, value: scenarioValue };
+      });
+      setAarsFactors(newFactors);
       setCvssScore(scenario.cvssScore);
     }
   };
@@ -142,13 +155,9 @@ const Calculator = () => {
   const handleSaveProfile = () => {
     if (profileName.trim() === "") return;
     const newProfile: Profile = {
-      id: Date.now(), // timestamp as unique ID
+      id: Date.now(),
       name: profileName,
-      inputs: {
-        cvssScore,
-        threatMultiplier,
-        aarsFactors,
-      },
+      inputs: { cvssScore, threatMultiplier, aarsFactors },
     };
     setProfiles([...profiles, newProfile]);
     setProfileName("");
@@ -168,26 +177,41 @@ const Calculator = () => {
     setProfiles(profiles.filter((profile) => profile.id !== profileId));
   };
 
-  // Calculate AARS score (average of all factors * 10)
+  const handleSelectForCompare = (profile: Profile) => {
+    if (
+      comparisonSlots[0]?.id === profile.id ||
+      comparisonSlots[1]?.id === profile.id
+    )
+      return; // Avoid adding the same profile twice
+
+    if (comparisonSlots[0] === null) {
+      setComparisonSlots([profile, null]);
+    } else {
+      setComparisonSlots([comparisonSlots[0], profile]);
+    }
+  };
+
+  const handleClearComparison = () => {
+    setComparisonSlots([null, null]);
+  };
+
+  // --- CALCULATIONS ---
   const aarsScore = aarsFactors.reduce((sum, factor) => sum + factor.value, 0);
-
-  // Calculate final AIVSS score
   const aivssScore = ((cvssScore + aarsScore) / 2) * threatMultiplier;
-
-  // Generate vector string (simplified)
-  const vectorString = `AIVSS:1.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:O/RC:C/AARS:${aarsScore.toFixed(
+  const vectorString = `(CVSS:${cvssScore.toFixed(1)}/AARS:${aarsScore.toFixed(
     1
-  )}/TM:${threatMultiplier}`;
+  )})`;
 
+  // --- UI DATA ---
   const threatMultiplierOptions = [
     { value: "1.0", label: "Actively Exploited (E=A) - 1.0" },
     { value: "0.97", label: "Proof-of-Concept (E=P) - 0.97" },
     { value: "0.91", label: "Unreported (E=U) - 0.91" },
   ];
 
+  // --- RENDER ---
   return (
     <div className="min-h-screen bg-background text-foreground font-cyber">
-      {/* Header */}
       <div className="border-b border-border bg-gradient-card">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center gap-4">
@@ -209,7 +233,6 @@ const Calculator = () => {
         </div>
       </div>
 
-      {/* Calculator Content */}
       <div className="container mx-auto px-6 py-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
@@ -224,81 +247,44 @@ const Calculator = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Left Column - Inputs */}
           <div className="space-y-6">
-            {/* CVSS Base Score */}
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
-                <CardTitle className="text-foreground">
-                  CVSS Base Score
-                </CardTitle>
+                <CardTitle>CVSS Base Score</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Score</span>
-                    <span className="text-sm font-medium text-foreground">
-                      {cvssScore.toFixed(1)}
-                    </span>
-                  </div>
-                  <Slider
-                    value={[cvssScore]}
-                    onValueChange={(value) => setCvssScore(value[0])}
-                    max={10}
-                    min={0}
-                    step={0.1}
-                    className="w-full"
-                  />
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Score</span>
+                  <span className="text-sm font-medium">
+                    {cvssScore.toFixed(1)}
+                  </span>
                 </div>
+                <Slider
+                  value={[cvssScore]}
+                  onValueChange={(v) => setCvssScore(v[0])}
+                  max={10}
+                  min={0}
+                  step={0.1}
+                />
               </CardContent>
             </Card>
 
-            {/* Threat Multiplier */}
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
-                <CardTitle className="text-foreground">
-                  Threat Multiplier
-                </CardTitle>
+                <CardTitle>Threat Multiplier</CardTitle>
               </CardHeader>
               <CardContent>
                 <Select
                   value={threatMultiplier.toString()}
-                  onValueChange={(value) =>
-                    setThreatMultiplier(parseFloat(value))
-                  }
+                  onValueChange={(v) => setThreatMultiplier(parseFloat(v))}
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {threatMultiplierOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </CardContent>
-            </Card>
-            {/* Owasp top 10 scenarious load */}
-            <Card className="bg-gradient-card border-border shadow-card">
-              <CardHeader>
-                <CardTitle className="text-foreground">
-                  Load Pre-defined OWASP Scenarios
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Select a scenario to instantly load its official scores.
-                </p>
-                <Select onValueChange={handleScenarioChange}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a Scenario ..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {owaspScenarios.map((scenario, index) => (
-                      <SelectItem key={index} value={scenario.name}>
-                        {scenario.name}
+                    {threatMultiplierOptions.map((o) => (
+                      <SelectItem key={o.value} value={o.value}>
+                        {o.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -306,54 +292,99 @@ const Calculator = () => {
               </CardContent>
             </Card>
 
-            {/* Scenario Profiles */}
-            <Card>
+            <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
-                <CardTitle className="text-foreground">
-                  Scenario Profiles
-                </CardTitle>
+                <CardTitle>Load Pre-defined OWASP Scenarios</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Select onValueChange={handleScenarioChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Scenario..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {owaspScenarios.map((s) => (
+                      <SelectItem key={s.name} value={s.name}>
+                        {s.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-card border-border shadow-card">
+              <CardHeader>
+                <CardTitle>Scenario Profiles</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-2">
                   <Input
                     type="text"
-                    placeholder="Profile Name"
+                    placeholder="New Profile Name..."
                     value={profileName}
                     onChange={(e) => setProfileName(e.target.value)}
-                    className="input input-bordered w-full"
                   />
-                  <Button onClick={handleSaveProfile}>
-                    Save Current as Profile
+                  <Button
+                    onClick={handleSaveProfile}
+                    size="sm"
+                    className="gap-2"
+                  >
+                    <Save className="w-4 h-4" /> Save
                   </Button>
                 </div>
-                <div className="space-y-2">
-                  {profiles.map((profile) => (
-                    <div
-                      key={profile.id}
-                      className="flex justify-between items-center p-2 bg-muted rounded"
-                    >
-                      <span>{profile.name}</span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleLoadProfile(profile.id)}
+                <div className="space-y-2 pt-2">
+                  {profiles.length === 0 ? (
+                    <p className="text-xs text-center text-muted-foreground py-2">
+                      No profiles saved yet.
+                    </p>
+                  ) : (
+                    profiles.map((profile) => (
+                      <div
+                        key={profile.id}
+                        className="flex justify-between items-center p-2 bg-muted rounded-md"
                       >
-                        Load
-                      </Button>
-                    </div>
-                  ))}
+                        <span className="text-sm font-medium">
+                          {profile.name}
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleSelectForCompare(profile)}
+                          >
+                            <GitCompare className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleLoadProfile(profile.id)}
+                          >
+                            <Download className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-destructive hover:text-destructive"
+                            onClick={() => handleDeleteProfile(profile.id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
 
-            {/* AARS Factors */}
             <AARSFactors
               factors={aarsFactors}
               onFactorChange={handleFactorChange}
             />
           </div>
 
-          {/* Center Column - Scores */}
           <div>
             <ScoreDisplay
               aivssScore={aivssScore}
@@ -363,7 +394,6 @@ const Calculator = () => {
             />
           </div>
 
-          {/* Right Column - Visualizations */}
           <div>
             <VisualizationPanel
               factors={aarsFactors}
@@ -372,6 +402,67 @@ const Calculator = () => {
             />
           </div>
         </div>
+
+        {comparisonSlots[0] && comparisonSlots[1] && (
+          <div className="mt-16 pt-8 border-t-2 border-primary/20">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-3xl font-bold text-foreground">
+                Comparison View
+              </h2>
+              <Button
+                variant="outline"
+                onClick={handleClearComparison}
+                className="gap-2"
+              >
+                <XCircle className="w-4 h-4" />
+                Clear Comparison
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {[comparisonSlots[0], comparisonSlots[1]].map(
+                (profile, index) => {
+                  if (!profile) return null;
+                  const pAarsScore = profile.inputs.aarsFactors.reduce(
+                    (s, f) => s + f.value,
+                    0
+                  );
+                  const pAivssScore =
+                    ((profile.inputs.cvssScore + pAarsScore) / 2) *
+                    profile.inputs.threatMultiplier;
+                  const pVectorString = `(CVSS:${profile.inputs.cvssScore.toFixed(
+                    1
+                  )}/AARS:${pAarsScore.toFixed(1)})`;
+
+                  return (
+                    <div key={profile.id}>
+                      <h3
+                        className={`text-xl font-bold mb-4 text-center ${
+                          index === 0 ? "text-primary" : "text-accent"
+                        }`}
+                      >
+                        {profile.name}
+                      </h3>
+                      <div className="space-y-8">
+                        <ScoreDisplay
+                          aivssScore={pAivssScore}
+                          aarsScore={pAarsScore}
+                          cvssScore={profile.inputs.cvssScore}
+                          vectorString={pVectorString}
+                        />
+                        <VisualizationPanel
+                          factors={profile.inputs.aarsFactors}
+                          aarsScore={pAarsScore}
+                          cvssScore={profile.inputs.cvssScore}
+                        />
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
