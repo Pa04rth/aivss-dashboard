@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
+import { generateReport } from "@/lib/reportGenerator";
+import html2canvas from "html2canvas";
 import {
   Select,
   SelectContent,
@@ -23,6 +25,7 @@ import {
   Save,
   GitCompare,
   XCircle,
+  FileDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AARSFactors from "@/components/calculator/AARSFactors";
@@ -50,7 +53,7 @@ interface Profile {
   };
 }
 
-// Initial state for the 10 AARS factors
+// Initial state for the 10 AARS factors, serving as a single source of truth for names/descriptions
 const initialAarsFactors: AARSFactor[] = [
   {
     id: "autonomy_of_action",
@@ -130,13 +133,14 @@ const Calculator = () => {
   const [threatMultiplier, setThreatMultiplier] = useState(0.97);
   const [aarsFactors, setAarsFactors] =
     useState<AARSFactor[]>(initialAarsFactors);
-
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [profileName, setProfileName] = useState("");
   const [comparisonSlots, setComparisonSlots] = useState<(Profile | null)[]>([
     null,
     null,
   ]);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+  const mainVisPanelRef = useRef<HTMLDivElement>(null);
 
   // --- LOGIC / HANDLERS ---
   const handleFactorChange = (id: string, value: number) => {
@@ -188,8 +192,7 @@ const Calculator = () => {
       comparisonSlots[0]?.id === profile.id ||
       comparisonSlots[1]?.id === profile.id
     )
-      return; // Avoid adding the same profile twice
-
+      return;
     if (comparisonSlots[0] === null) {
       setComparisonSlots([profile, null]);
     } else {
@@ -199,6 +202,35 @@ const Calculator = () => {
 
   const handleClearComparison = () => {
     setComparisonSlots([null, null]);
+  };
+
+  const handleGenerateReport = async () => {
+    if (!mainVisPanelRef.current) {
+      alert("Error: Visualization panel is not available to capture.");
+      return;
+    }
+    setIsGeneratingReport(true);
+    try {
+      const canvas = await html2canvas(mainVisPanelRef.current, {
+        backgroundColor: null,
+        scale: 2,
+      });
+      const chartImage = canvas.toDataURL("image/png");
+
+      generateReport({
+        aivssScore,
+        aarsScore,
+        cvssScore,
+        vectorString,
+        aarsFactors,
+        chartImage,
+      });
+    } catch (error) {
+      console.error("Error generating report:", error);
+      alert("Failed to generate report. Please try again.");
+    } finally {
+      setIsGeneratingReport(false);
+    }
   };
 
   // --- CALCULATIONS ---
@@ -416,16 +448,26 @@ const Calculator = () => {
             />
           </div>
 
-          <div>
+          <div className="space-y-4">
             <ScoreDisplay
               aivssScore={aivssScore}
               aarsScore={aarsScore}
               cvssScore={cvssScore}
               vectorString={vectorString}
             />
+            <Button
+              onClick={handleGenerateReport}
+              disabled={isGeneratingReport}
+              className="w-full gap-2"
+            >
+              <FileDown className="w-4 h-4" />
+              {isGeneratingReport
+                ? "Generating Report..."
+                : "Generate PDF Report"}
+            </Button>
           </div>
 
-          <div>
+          <div ref={mainVisPanelRef}>
             <VisualizationPanel
               factors={aarsFactors}
               aarsScore={aarsScore}
