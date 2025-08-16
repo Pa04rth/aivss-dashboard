@@ -370,48 +370,51 @@ const Calculator = () => {
               aarsScore={aarsScore}
               cvssScore={cvssScore}
             />
-            <Card className="bg-card border-border shadow-card">
-              <CardHeader>
-                <CardTitle className="font-mono text-base uppercase tracking-widest">
+            <Card className="bg-gradient-to-br from-card/90 to-muted/30 border-2 border-border/50 shadow-elevated backdrop-blur-sm">
+              <CardHeader className="border-b border-border/30 bg-gradient-to-r from-transparent to-accent/5">
+                <CardTitle className="font-mono text-base uppercase tracking-[0.15em] text-foreground flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-accent to-primary animate-pulse" />
                   Vector Strings
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <label className="text-xs font-semibold text-muted-foreground">
+              <CardContent className="space-y-6 p-6">
+                <div className="space-y-3">
+                  <label className="text-xs font-bold uppercase tracking-[0.1em] text-primary/90 flex items-center gap-2">
+                    <div className="w-1 h-3 bg-gradient-to-b from-accent to-primary rounded-full" />
                     AIVSS VECTOR
                   </label>
-                  <div className="flex items-center gap-2 mt-1">
-                    <pre className="p-2 bg-muted rounded font-mono text-xs truncate w-full">
+                  <div className="flex items-center gap-3">
+                    <pre className="flex-1 p-3 bg-gradient-to-r from-muted/80 to-card/60 border-2 border-primary/30 rounded-lg font-mono text-sm text-primary shadow-glow backdrop-blur-sm overflow-x-auto">
                       {aivssVectorString}
                     </pre>
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       size="sm"
                       onClick={() => handleCopy(aivssVectorString, "aivss")}
-                      className="gap-2"
+                      className="gap-2 border-2 border-primary/50 hover:bg-primary/10 hover:border-primary transition-all duration-300"
                     >
-                      <Copy className="w-3 h-3" />
-                      {copyStatus.aivss}
+                      <Copy className="w-4 h-4" />
+                      <span className="hidden sm:inline">{copyStatus.aivss}</span>
                     </Button>
                   </div>
                 </div>
-                <div>
-                  <label className="text-xs font-semibold text-muted-foreground">
+                <div className="space-y-3">
+                  <label className="text-xs font-bold uppercase tracking-[0.1em] text-accent/90 flex items-center gap-2">
+                    <div className="w-1 h-3 bg-gradient-to-b from-primary to-accent rounded-full" />
                     CVSS 4.0 VECTOR
                   </label>
-                  <div className="flex items-center gap-2 mt-1">
-                    <pre className="p-2 bg-muted rounded font-mono text-xs truncate w-full">
+                  <div className="flex items-center gap-3">
+                    <pre className="flex-1 p-3 bg-gradient-to-r from-muted/80 to-card/60 border-2 border-accent/30 rounded-lg font-mono text-sm text-accent shadow-glow backdrop-blur-sm overflow-x-auto">
                       {cvssVectorString}
                     </pre>
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       size="sm"
                       onClick={() => handleCopy(cvssVectorString, "cvss")}
-                      className="gap-2"
+                      className="gap-2 border-2 border-accent/50 hover:bg-accent/10 hover:border-accent transition-all duration-300"
                     >
-                      <Copy className="w-3 h-3" />
-                      {copyStatus.cvss}
+                      <Copy className="w-4 h-4" />
+                      <span className="hidden sm:inline">{copyStatus.cvss}</span>
                     </Button>
                   </div>
                 </div>

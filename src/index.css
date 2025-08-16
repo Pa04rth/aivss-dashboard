@@ -74,6 +74,11 @@
       hsl(var(--primary) / 0.3),
       transparent 70%
     );
+    --gradient-radial: radial-gradient(
+      circle,
+      hsl(var(--primary) / 0.2),
+      transparent 50%
+    );
 
     /* Shadow Definitions */
     --shadow-glow: 0 0 20px hsl(var(--primary) / 0.3);
