@@ -71,15 +71,11 @@ To run this project on your local machine:
     ```bash
     git clone https://github.com/Pa04rth/agentrisk-insight.git
     ```
-2.  **Navigate to the project directory:**
-    ```bash
-    cd [YOUR_PROJECT_DIRECTORY]
-    ```
-3.  **Install dependencies:**
+2.  **Install dependencies:**
     ```bash
     npm install
     ```
-4.  **Run the development server:**
+3.  **Run the development server:**
     ```bash
     npm run dev
     ```
