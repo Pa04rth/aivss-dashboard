@@ -510,7 +510,7 @@ const Calculator = () => {
                             {profile.name}
                           </span>
                           <div className="flex items-center gap-1">
-                            <TooltipProvider>
+                            <TooltipProvider delayDuration={0}>
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <Button
@@ -531,7 +531,7 @@ const Calculator = () => {
                                 <TooltipContent>Compare</TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
-                            <TooltipProvider>
+                            <TooltipProvider delayDuration={0}>
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <Button
@@ -548,7 +548,7 @@ const Calculator = () => {
                                 <TooltipContent>Load</TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
-                            <TooltipProvider>
+                            <TooltipProvider delayDuration={0}>
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <Button

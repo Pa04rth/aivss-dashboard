@@ -2,7 +2,12 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AARSFactor {
   id: string;
@@ -34,13 +39,16 @@ const AARSFactors = ({ factors, onFactorChange }: AARSFactorsProps) => {
       <CardHeader>
         <CardTitle className="text-foreground flex items-center gap-2">
           AARS Factors Assessment
-          <TooltipProvider>
+          <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger>
                 <Info className="w-4 h-4 text-muted-foreground" />
               </TooltipTrigger>
               <TooltipContent>
-                <p className="max-w-xs">Rate each factor based on the agent's capabilities: None (0.0), Partial (0.5), or Full (1.0)</p>
+                <p className="max-w-xs">
+                  Rate each factor based on the agent's capabilities: None
+                  (0.0), Partial (0.5), or Full (1.0)
+                </p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -50,8 +58,10 @@ const AARSFactors = ({ factors, onFactorChange }: AARSFactorsProps) => {
         {factors.map((factor) => (
           <div key={factor.id} className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-foreground">{factor.name}</span>
-              <TooltipProvider>
+              <span className="text-sm font-medium text-foreground">
+                {factor.name}
+              </span>
+              <TooltipProvider delayDuration={0}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Info className="w-3 h-3 text-muted-foreground" />
@@ -62,7 +72,7 @@ const AARSFactors = ({ factors, onFactorChange }: AARSFactorsProps) => {
                 </Tooltip>
               </TooltipProvider>
             </div>
-            
+
             <div className="flex gap-1">
               <Button
                 size="sm"

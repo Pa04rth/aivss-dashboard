@@ -69,7 +69,7 @@ To run this project on your local machine:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/Pa04rth/agentrisk-insight.git
+    git clone https://github.com/Pa04rth/aivss-dashboard.git
     ```
 2.  **Install dependencies:**
     ```bash
